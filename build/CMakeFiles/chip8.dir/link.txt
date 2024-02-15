@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/chip8.dir/src/main.c.o -o chip8  /usr/lib/libSDL2main.a /usr/lib/libSDL2-2.0.so.0.3000.0 
