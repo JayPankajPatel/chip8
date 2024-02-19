@@ -74,7 +74,9 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
   /usr/include/bits/stdint-intn.h \
   /usr/include/bits/stdint-least.h \
   /usr/include/bits/stdint-uintn.h \
+  /usr/include/bits/stdio.h \
   /usr/include/bits/stdio_lim.h \
+  /usr/include/bits/stdlib-bsearch.h \
   /usr/include/bits/stdlib-float.h \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
@@ -270,10 +272,6 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/hresetintrin.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/uintrintrin.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/gfniintrin.h:
-
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/fxsrintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/float.h:
@@ -337,6 +335,10 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/avx2intrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/amxint8intrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/wmmintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/amxcomplexintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/tbmintrin.h:
 
@@ -476,6 +478,8 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 
 /usr/include/bits/types.h:
 
+/usr/include/bits/stdlib-bsearch.h:
+
 /usr/include/SDL2/SDL_misc.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/amxtileintrin.h:
@@ -536,10 +540,6 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 
 /usr/include/bits/long-double.h:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/wmmintrin.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/amxcomplexintrin.h:
-
 /usr/include/bits/math-vector.h:
 
 /usr/include/bits/struct_rwlock.h:
@@ -559,6 +559,12 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 /usr/include/bits/types/cookie_io_functions_t.h:
 
 /usr/include/endian.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/uintrintrin.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/gfniintrin.h:
+
+/usr/include/bits/stdio.h:
 
 /usr/include/bits/types/struct_timeval.h:
 
