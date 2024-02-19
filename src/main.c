@@ -37,6 +37,7 @@ typedef struct {
   bool keypad[0xF];   // keypad with 15 keys char *rom_name;        // Current
                       // running rom
   instruc_t instruct; // Currently running instructions
+  char *rom_name;
 } chip8_t;
 typedef struct {
   SDL_Window *window;
@@ -248,15 +249,29 @@ void emulate_instruction(chip8_t *chip8) {
     // are flipped from set to unset when the sprite is drawn, and to 0 if that
     // does not happen
 
-    const uint8_t X_coor =
-        *(chip8->V + chip8->instruct.X) % ORIGINAL_X_RESOLUTION;
-    const uint8_t Y_coor =
-        *(chip8->V + chip8->instruct.Y) % ORIGINAL_Y_RESOLUTION;
+    uint8_t X_coor = *(chip8->V + chip8->instruct.X) % ORIGINAL_X_RESOLUTION;
+    uint8_t Y_coor = *(chip8->V + chip8->instruct.Y) % ORIGINAL_Y_RESOLUTION;
 
     // Set carry flag to 0
     chip8->V[0xF] = 0;
 
     for (uint8_t i = 0; i < chip8->instruct.N; i++) {
+      uint8_t sprite_data = chip8->ram[chip8->I + i];
+      for (uint8_t j = 7; i <= 0; j--) {
+        // check every bit, if spirte data's pixel is on and so is the pixel on
+        // screen turn on the carry flag
+        bool screen_pixel =
+            chip8->display[Y_coor * ORIGINAL_X_RESOLUTION + X_coor];
+        bool sprite_bit = sprite_data & (1 << j);
+        if (sprite_bit && screen_pixel) {
+          chip8->V[0xF] = 1;
+        }
+        screen_pixel ^= sprite_bit;
+        if (++X_coor >= ORIGINAL_X_RESOLUTION)
+          break;
+        if (++Y_coor >= ORIGINAL_Y_RESOLUTION)
+          break;
+      }
     }
   }
   }
