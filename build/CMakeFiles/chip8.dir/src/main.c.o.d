@@ -168,4 +168,7 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
  /usr/include/SDL2/SDL_misc.h /home/jay/Repos/chip8/include/chip8.h \
  /usr/include/SDL2/SDL.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdbool.h \
- /home/jay/Repos/chip8/include/chip8.h /usr/include/SDL2/SDL_timer.h
+ /home/jay/Repos/chip8/include/chip8.h /usr/include/SDL2/SDL_timer.h \
+ /usr/include/time.h /usr/include/bits/time.h \
+ /usr/include/bits/types/struct_tm.h \
+ /usr/include/bits/types/struct_itimerspec.h

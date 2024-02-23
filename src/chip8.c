@@ -124,11 +124,6 @@ void emulate_instructions(chip8_t *chip8) {
     if (chip8->V[X] == chip8->V[Y])
       chip8->PC += 2;
     break;
-  case 0x09:
-    // 9XY0: Skips the next instruction if VX  does not equal VY
-    if (chip8->V[X] != chip8->V[Y])
-      chip8->PC += 2;
-    break;
   case 0x06:
     // 6XNN: Sets Vx to NN
     chip8->V[X] = NN;
@@ -137,9 +132,81 @@ void emulate_instructions(chip8_t *chip8) {
     // 7XNN: Add the value of NN to VX
     chip8->V[X] += NN;
     break;
+  case 0x08:
+    switch (N) {
+
+    case 0:
+      // 8XY0: Sets VX to the value of VY.
+      chip8->V[X] = chip8->V[Y];
+      break;
+    case 1:
+      // 8XY1: Sets VX to VX or VY. (bitwise OR operation).
+      chip8->V[X] |= chip8->V[Y];
+      break;
+    case 2:
+      // 8XY2: Sets VX to VX and VY. (bitwise AND operation).
+      chip8->V[X] &= chip8->V[Y];
+      break;
+    case 3:
+      // 8XY3: Sets VX to VX xor VY.
+      chip8->V[X] ^= chip8->V[Y];
+      break;
+    case 4: {
+      // 8XY4: Sets VX to VX += VY set VF to 1 if there is overflow.
+      // Note: C will handle the implicit wrap around from overflow
+      uint16_t sum = chip8->V[X] + chip8->V[Y];
+      if (sum > 255)
+        chip8->V[0x0F] = 1;
+      chip8->V[X] += sum;
+      break;
+    }
+    case 5:
+      // 8XY5: VY is subtracted from VX. VF is set to 0 when there's an
+      // underflow, and 1 when there is not. (i.e. VF set to 1 if VX >= VY and 0
+      // if not).
+      chip8->V[0x0F] = chip8->V[X] >= chip8->V[Y] ? 1 : 0;
+      chip8->V[X] -= chip8->V[Y];
+      break;
+    case 6:
+      // 	8XY6: Stores the least significant bit of VX in VF and then
+      // shifts VX to the right by 1.
+      chip8->V[0x0F] = chip8->V[X] & 1;
+      chip8->V[X] >>= 1;
+      break;
+    case 7:
+      // 8XY7:Sets VX to VY minus VX. VF is set to 0 when there's an underflow,
+      // and 1 when there is not. (i.e. VF set to 1 if VY >= VX).
+      chip8->V[0x0F] = chip8->V[Y] >= chip8->V[X] ? 1 : 0;
+      chip8->V[X] = chip8->V[Y] - chip8->V[Y];
+      break;
+    case 0x0E:
+      // 8XYE: 	Stores the most significant bit of VX in VF and then shifts VX
+      // to the left by 1.
+      chip8->V[0x0F] = chip8->V[X] & 1;
+      chip8->V[X] <<= 1;
+      break;
+
+    default:
+      SDL_Log("Wrong or Unimplemented opcode from 0x08\n");
+      break;
+    }
+  case 0x09:
+    // 9XY0: Skips the next instruction if VX  does not equal VY
+    if (chip8->V[X] != chip8->V[Y])
+      chip8->PC += 2;
+    break;
   case 0x0A:
     // ANNN: Sets I to the address NNN
     chip8->I = NNN;
+    break;
+  case 0x0B:
+    // BNNN: Jump to the address NNN plus V0
+    chip8->PC = chip8->V[0] + NNN;
+    break;
+  case 0x0C:
+    // CXNN: Sets VX to the result of a bitwise and operation on a random number
+    // (Typically: 0 to 255) and NN.
+    chip8->V[X] = (rand() % 256) & NN;
     break;
   case 0x0D: {
     // DXYN Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels
@@ -168,6 +235,21 @@ void emulate_instructions(chip8_t *chip8) {
     }
     break;
   }
+  case 0x0E:
+    switch (NN) {
+    case 0x9E:
+      // EX9E: Skips the next instruction if the key stored in VX is pressed
+      // (usually the next instruction is a jump to skip a code block)
+      if (chip8->keypad[chip8->V[X]])
+        chip8->PC += 2;
+      break;
+    case 0xA1:
+      // EXA1: Skips the next instruction if the key stored in VX is not pressed
+      // (usually the next instruction is a jump to skip a code block)
+      if (!chip8->keypad[chip8->V[X]])
+        chip8->PC += 2;
+      break;
+    }
 
   default:
     SDL_Log("Unimplemented opcode");

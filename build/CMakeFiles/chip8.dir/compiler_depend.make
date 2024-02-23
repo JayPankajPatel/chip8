@@ -541,6 +541,7 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
   /usr/include/bits/struct_mutex.h \
   /usr/include/bits/struct_rwlock.h \
   /usr/include/bits/thread-shared-types.h \
+  /usr/include/bits/time.h \
   /usr/include/bits/time64.h \
   /usr/include/bits/timesize.h \
   /usr/include/bits/types.h \
@@ -558,8 +559,10 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
   /usr/include/bits/types/mbstate_t.h \
   /usr/include/bits/types/sigset_t.h \
   /usr/include/bits/types/struct_FILE.h \
+  /usr/include/bits/types/struct_itimerspec.h \
   /usr/include/bits/types/struct_timespec.h \
   /usr/include/bits/types/struct_timeval.h \
+  /usr/include/bits/types/struct_tm.h \
   /usr/include/bits/types/time_t.h \
   /usr/include/bits/types/timer_t.h \
   /usr/include/bits/types/wint_t.h \
@@ -586,6 +589,7 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
   /usr/include/sys/cdefs.h \
   /usr/include/sys/select.h \
   /usr/include/sys/types.h \
+  /usr/include/time.h \
   /usr/include/wchar.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/adxintrin.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/amxbf16intrin.h \
@@ -724,6 +728,8 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/mwaitintrin.h:
 
+/usr/include/bits/types/struct_tm.h:
+
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/x86gprintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/movdirintrin.h:
@@ -745,6 +751,8 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/f16cintrin.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/emmintrin.h:
+
+/usr/include/time.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/cmpccxaddintrin.h:
 
@@ -1022,6 +1030,8 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 
 /usr/include/bits/math-vector.h:
 
+/usr/include/bits/types/struct_itimerspec.h:
+
 /usr/include/bits/struct_rwlock.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/tmmintrin.h:
@@ -1059,6 +1069,8 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
 /usr/include/bits/types/__fpos64_t.h:
 
 /usr/include/bits/types/__locale_t.h:
+
+/usr/include/bits/time.h:
 
 /usr/include/bits/stdio_lim.h:
 

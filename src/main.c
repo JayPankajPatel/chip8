@@ -2,7 +2,7 @@
 #include "chip8.h"
 #include <SDL_timer.h>
 #include <stdlib.h>
-
+#include <time.h>
 emulator_state state;
 chip8_t chip8;
 
@@ -20,6 +20,9 @@ int main(int argc, char *argv[]) {
   if (!init_chip8(&state, argv[1], &chip8)) {
     exit(EXIT_FAILURE);
   }
+
+  // srand setup for the 0xCXNN opcode
+  srand(time(NULL));
 
   while (state != QUIT) {
     handle_keyboard_event(&state);
