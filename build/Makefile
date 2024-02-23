@@ -129,6 +129,54 @@ chip8/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/build
 .PHONY : chip8/fast
 
+src/aux.o: src/aux.c.o
+.PHONY : src/aux.o
+
+# target to build an object file
+src/aux.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/aux.c.o
+.PHONY : src/aux.c.o
+
+src/aux.i: src/aux.c.i
+.PHONY : src/aux.i
+
+# target to preprocess a source file
+src/aux.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/aux.c.i
+.PHONY : src/aux.c.i
+
+src/aux.s: src/aux.c.s
+.PHONY : src/aux.s
+
+# target to generate assembly for a file
+src/aux.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/aux.c.s
+.PHONY : src/aux.c.s
+
+src/chip8.o: src/chip8.c.o
+.PHONY : src/chip8.o
+
+# target to build an object file
+src/chip8.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/chip8.c.o
+.PHONY : src/chip8.c.o
+
+src/chip8.i: src/chip8.c.i
+.PHONY : src/chip8.i
+
+# target to preprocess a source file
+src/chip8.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/chip8.c.i
+.PHONY : src/chip8.c.i
+
+src/chip8.s: src/chip8.c.s
+.PHONY : src/chip8.s
+
+# target to generate assembly for a file
+src/chip8.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/chip8.dir/build.make CMakeFiles/chip8.dir/src/chip8.c.s
+.PHONY : src/chip8.c.s
+
 src/main.o: src/main.c.o
 .PHONY : src/main.o
 
@@ -162,6 +210,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... chip8"
+	@echo "... src/aux.o"
+	@echo "... src/aux.i"
+	@echo "... src/aux.s"
+	@echo "... src/chip8.o"
+	@echo "... src/chip8.i"
+	@echo "... src/chip8.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

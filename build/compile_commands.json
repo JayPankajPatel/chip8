@@ -1,0 +1,20 @@
+[
+{
+  "directory": "/home/jay/Repos/chip8/build",
+  "command": "/usr/bin/cc  -I/home/jay/Repos/chip8/include -isystem /usr/include/SDL2  -g3 -O3 -DNDEBUG -o CMakeFiles/chip8.dir/src/main.c.o -c /home/jay/Repos/chip8/src/main.c",
+  "file": "/home/jay/Repos/chip8/src/main.c",
+  "output": "CMakeFiles/chip8.dir/src/main.c.o"
+},
+{
+  "directory": "/home/jay/Repos/chip8/build",
+  "command": "/usr/bin/cc  -I/home/jay/Repos/chip8/include -isystem /usr/include/SDL2  -g3 -O3 -DNDEBUG -o CMakeFiles/chip8.dir/src/aux.c.o -c /home/jay/Repos/chip8/src/aux.c",
+  "file": "/home/jay/Repos/chip8/src/aux.c",
+  "output": "CMakeFiles/chip8.dir/src/aux.c.o"
+},
+{
+  "directory": "/home/jay/Repos/chip8/build",
+  "command": "/usr/bin/cc  -I/home/jay/Repos/chip8/include -isystem /usr/include/SDL2  -g3 -O3 -DNDEBUG -o CMakeFiles/chip8.dir/src/chip8.c.o -c /home/jay/Repos/chip8/src/chip8.c",
+  "file": "/home/jay/Repos/chip8/src/chip8.c",
+  "output": "CMakeFiles/chip8.dir/src/chip8.c.o"
+}
+]

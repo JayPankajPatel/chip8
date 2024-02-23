@@ -4,7 +4,7 @@
 # compile C with /usr/bin/cc
 C_DEFINES = 
 
-C_INCLUDES = -isystem /usr/include/SDL2
+C_INCLUDES = -I/home/jay/Repos/chip8/include -isystem /usr/include/SDL2
 
-C_FLAGS = -O3 -DNDEBUG
+C_FLAGS =  -g3 -O3 -DNDEBUG
 

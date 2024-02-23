@@ -1,4 +1,4 @@
-CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
+CMakeFiles/chip8.dir/src/aux.c.o: /home/jay/Repos/chip8/src/aux.c \
  /usr/include/stdc-predef.h /home/jay/Repos/chip8/include/aux.h \
  /usr/include/SDL2/SDL.h /usr/include/SDL2/SDL_main.h \
  /usr/include/SDL2/SDL_stdinc.h /usr/include/SDL2/SDL_config.h \
@@ -168,4 +168,5 @@ CMakeFiles/chip8.dir/src/main.c.o: /home/jay/Repos/chip8/src/main.c \
  /usr/include/SDL2/SDL_misc.h /home/jay/Repos/chip8/include/chip8.h \
  /usr/include/SDL2/SDL.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdbool.h \
- /home/jay/Repos/chip8/include/chip8.h /usr/include/SDL2/SDL_timer.h
+ /home/jay/Repos/chip8/include/chip8.h /usr/include/SDL2/SDL_rect.h \
+ /usr/include/SDL2/SDL_render.h

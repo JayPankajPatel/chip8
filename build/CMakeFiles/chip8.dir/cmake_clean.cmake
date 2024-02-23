@@ -1,4 +1,8 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/chip8.dir/src/aux.c.o"
+  "CMakeFiles/chip8.dir/src/aux.c.o.d"
+  "CMakeFiles/chip8.dir/src/chip8.c.o"
+  "CMakeFiles/chip8.dir/src/chip8.c.o.d"
   "CMakeFiles/chip8.dir/src/main.c.o"
   "CMakeFiles/chip8.dir/src/main.c.o.d"
   "chip8"
