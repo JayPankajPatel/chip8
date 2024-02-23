@@ -17,6 +17,9 @@ typedef struct {
   // Program counter, points to current instruction in memory
   uint16_t PC;
   // original resolution of the chip-8
+
+  // 12 bit register for memory addresses.
+  uint16_t I;
   bool display[64 * 32];
   // input keypad supports 16 keys in the original chip-8
   uint8_t keypad[16];

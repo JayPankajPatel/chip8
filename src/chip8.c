@@ -34,6 +34,8 @@ bool init_chip8(emulator_state *state, const char *rom_name, chip8_t *chip8) {
   chip8->PC = ENTRY_POINT;
   // set the stack pointer to the start of the stack
   chip8->stack_pointer = chip8->stack;
+
+  chip8->I = 0;
   // Load rom
   FILE *rom = fopen(rom_name, "rb");
   if (!rom) {
@@ -79,8 +81,6 @@ void emulate_instructions(chip8_t *chip8) {
   // 0x0F is technically unnecessary but just a precaution
   uint8_t X = (opcode >> 8) & 0x0F;
   uint8_t Y = (opcode >> 4) & 0x0F;
-  // Will be set in an instruction
-  uint16_t I = 0;
 
   switch ((opcode >> 12) & 0x0F) {
   case 0x00:
@@ -139,7 +139,7 @@ void emulate_instructions(chip8_t *chip8) {
     break;
   case 0x0A:
     // ANNN: Sets I to the address NNN
-    I = NNN;
+    chip8->I = NNN;
     break;
   case 0x0D: {
     // DXYN Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels
@@ -152,7 +152,7 @@ void emulate_instructions(chip8_t *chip8) {
     chip8->draw_flag = 1;
     chip8->V[0xF] = 0;
     for (uint16_t yline = 0; yline < N; yline++) {
-      uint16_t pixel = chip8->ram[I + yline];
+      uint16_t pixel = chip8->ram[chip8->I + yline];
 
       for (uint16_t xline = 0; xline <= 7; xline++) {
         if ((pixel & (0x80 >> xline))) {

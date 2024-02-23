@@ -23,14 +23,13 @@ int main(int argc, char *argv[]) {
 
   while (state != QUIT) {
     handle_keyboard_event(&state);
+    if (state == PAUSED)
+      continue;
     emulate_instructions(&chip8);
     if (chip8.draw_flag) {
       draw_display(chip8);
     }
     SDL_Delay(16);
-
-    if (state == PAUSED)
-      continue;
   }
 
   deinit_SDL();
