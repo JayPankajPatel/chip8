@@ -216,6 +216,10 @@ void emulate_instructions(chip8_t *chip8) {
     // screen pixels are flipped from set to unset when the sprite is drawn, and
     // to 0 if that does not happen
     //
+
+    uint8_t X_coordinate = chip8->V[X] % RESOLUTION_WIDTH;
+    uint8_t Y_coordinate = chip8->V[Y] % RESOLUTION_HEIGHT;
+
     chip8->draw_flag = 1;
     chip8->V[0xF] = 0;
     for (uint16_t yline = 0; yline < N; yline++) {
@@ -223,13 +227,13 @@ void emulate_instructions(chip8_t *chip8) {
 
       for (uint16_t xline = 0; xline <= 7; xline++) {
         if ((pixel & (0x80 >> xline))) {
-          if (chip8->display[(chip8->V[X] + xline +
-                              ((chip8->V[Y] + yline) * RESOLUTION_WIDTH))]) {
+          if (chip8->display[(X_coordinate + xline +
+                              ((Y_coordinate + yline) * RESOLUTION_WIDTH))]) {
             chip8->V[0xF] = 1;
           }
 
-          chip8->display[chip8->V[X] + xline +
-                         ((chip8->V[Y] + yline) * RESOLUTION_WIDTH)] ^= true;
+          chip8->display[X_coordinate + xline +
+                         ((Y_coordinate + yline) * RESOLUTION_WIDTH)] ^= true;
         }
       }
     }
@@ -248,6 +252,21 @@ void emulate_instructions(chip8_t *chip8) {
       // (usually the next instruction is a jump to skip a code block)
       if (!chip8->keypad[chip8->V[X]])
         chip8->PC += 2;
+      break;
+    default:
+      SDL_Log("Wrong or Unimplemented opcode from 0x0E\n");
+      break;
+    }
+
+  case 0x0F:
+    switch (NN) {
+    case 0x0A:
+      // FX0A: A key press is awaited, and then stored in VX (blocking
+      // operation, all instruction halted until next key event).
+
+      break;
+    default:
+      SDL_Log("Wrong or Unimplemented opcode from 0x0F\n");
       break;
     }
 
