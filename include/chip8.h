@@ -31,8 +31,14 @@ typedef struct {
   uint8_t sound_flag;
 } chip8_t;
 
+/**
+ * @brief Reset ram, display, load font, read rom file, set state to Running
+ *
+ * @param state: State of the emulator
+ * @param chip8 Chip-8 machine
+ * @return True if Initialization was successful, False if not
+ */
 bool init_chip8(emulator_state *state, const char *, chip8_t *chip8);
-// bool load_rom(const char *filename, chip8_t *chip8);
 
 /**
  * @brief Handles Events that are classified by SDL, specifically keyboard
