@@ -60,6 +60,16 @@ bool init_chip8(emulator_state *state, const char *rom_name, chip8_t *chip8) {
   *state = RUNNING;
   return true;
 }
+void update_timers(chip8_t *chip8) {
+
+  if (chip8->delay_timer > 0) {
+    chip8->delay_timer--;
+  }
+  if (chip8->sound_timer > 0) {
+    // TODO Play sound
+    chip8->sound_timer--;
+  }
+}
 void emulate_instructions(chip8_t *chip8) {
   // All opcodes are two bytes long and stored in big-endian
   // however the ram is 8bit wide so we have to combine two consecutive
@@ -152,8 +162,8 @@ void emulate_instructions(chip8_t *chip8) {
       chip8->V[X] ^= chip8->V[Y];
       break;
     case 4: {
-      // 8XY4: Sets VX to VX += VY set VF to 1 if there is overflow.
-      // Note: C will handle the implicit wrap around from overflow
+      // // 8XY4: Sets VX to VX += VY set VF to 1 if there is overflow.
+      // // Note: C will handle the implicit wrap around from overflow
       uint16_t sum = chip8->V[X] + chip8->V[Y];
       if (sum > 255)
         chip8->V[0x0F] = 1;
@@ -179,7 +189,7 @@ void emulate_instructions(chip8_t *chip8) {
       chip8->V[0x0F] = chip8->V[Y] >= chip8->V[X] ? 1 : 0;
       chip8->V[X] = chip8->V[Y] - chip8->V[Y];
       break;
-    case 0x0E:
+    case 0xE:
       // 8XYE: 	Stores the most significant bit of VX in VF and then shifts VX
       // to the left by 1.
       chip8->V[0x0F] = chip8->V[X] & 1;
@@ -239,6 +249,7 @@ void emulate_instructions(chip8_t *chip8) {
     }
     break;
   }
+
   case 0x0E:
     switch (NN) {
     case 0x9E:
@@ -257,21 +268,85 @@ void emulate_instructions(chip8_t *chip8) {
       SDL_Log("Wrong or Unimplemented opcode from 0x0E\n");
       break;
     }
+    break;
 
   case 0x0F:
     switch (NN) {
-    case 0x0A:
-      // FX0A: A key press is awaited, and then stored in VX (blocking
-      // operation, all instruction halted until next key event).
-
+    case 0x07:
+      // FX07: Sets VX to the value of the delay timer.
+      chip8->V[X] = chip8->delay_timer;
       break;
-    default:
-      SDL_Log("Wrong or Unimplemented opcode from 0x0F\n");
+    case 0x0A: {
+      // 0xFX0A: VX = get_key(); Await until a keypress, and store in VX
+      bool key_pressed = false;
+      for (uint16_t i = 0; i < sizeof(chip8->keypad); i++) {
+        if (chip8->keypad[i]) {
+          chip8->V[X] = i;
+          key_pressed = true;
+          break;
+        }
+      }
+      if (!key_pressed) {
+        chip8->PC -= 2;
+        break;
+      }
+    } break;
+
+    case 0x15:
+      // FX15: Sets the delay timer to VX
+      chip8->delay_timer = chip8->V[X];
+      break;
+    case 0x18:
+      // FX18: Sets the sound timer to VX
+      chip8->sound_timer = chip8->V[X];
+      break;
+    case 0x1E:
+      // FX1E: Adds VX to I. VF is not affected
+      chip8->I += chip8->V[X];
+      break;
+    case 0x29:
+      // FX29: Sets I to the location of the sprite for the character in Vx
+      // Font is stored in the first 512 bytes of ram
+      chip8->I = chip8->V[X] * 5;
+      break;
+    case 0x33: {
+      // FX33: Stores the binary-coded decimal representation of VX, with
+      // the hundreds digit in memory at location in I, the tens digit at
+      // location I+1, and the ones digit at location I+2
+      uint8_t bcd = chip8->V[X];
+      chip8->ram[chip8->I + 2] = bcd % 10;
+      bcd /= 10;
+      chip8->ram[chip8->I + 1] = bcd % 10;
+      bcd /= 10;
+      chip8->ram[chip8->I] = bcd;
       break;
     }
+    case 0x55:
+      // FX55: Stores from V0 to VX (including VX) in memory, starting at
+      // address I. The offset from I is increased by 1 for each value
+      // written, but I itself is left unmodified.
+
+      for (uint8_t i = 0; i <= X; i++) {
+        chip8->ram[chip8->I + i] = chip8->V[i];
+      }
+      break;
+    case 0x65:
+      // FX65: Fills from V0 to VX (including VX) with values from memory,
+      // starting at address I. The offset from I is increased by 1 for each
+      // value read, but I itself is left unmodified.
+      for (uint8_t i = 0; i <= X; i++) {
+        chip8->V[i] = chip8->ram[chip8->I + i];
+      }
+      break;
+
+    default:
+      SDL_Log("Wrong or Unimplemented opcode from 0x0F, %04x\n", opcode);
+      break;
+    }
+    break;
 
   default:
-    SDL_Log("Unimplemented opcode");
+    SDL_Log("Unimplemented opcode %04x\n", opcode);
     break;
   }
 }

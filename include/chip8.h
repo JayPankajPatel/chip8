@@ -39,4 +39,5 @@ bool init_chip8(emulator_state *state, const char *, chip8_t *chip8);
  * events
  * @return void
  */
+void update_timers(chip8_t *chip8);
 #endif // __CHIP_8_H__

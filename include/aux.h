@@ -26,7 +26,7 @@ void deinit_SDL();
  * events
  * @return void
  */
-void handle_keyboard_event(emulator_state *state);
+void handle_keyboard_event(emulator_state *state, chip8_t *chip8);
 void draw_display(chip8_t chip8);
 void emulate_instructions(chip8_t *chip8);
 #endif // __AUX_H__
