@@ -36,8 +36,13 @@ int main(int argc, char *argv[]) {
     // We divide by 60 to get the value of the amount of instructions that will
     // run at 60 Hz
 
-    for (uint32_t i = 0; i < INSTRUCTIONS_PER_SECOND / 60; i++)
+    for (uint32_t i = 0; i < INSTRUCTIONS_PER_SECOND / 60; i++) {
+
       emulate_instructions(&chip8);
+      if (chip8.draw_flag) {
+        draw_display(chip8);
+      }
+    }
     const uint32_t time_end = SDL_GetPerformanceCounter();
     // returns counts per second, to get ms, which is what SDL_Delay accepts, we
     // must multiply by 1000
@@ -48,9 +53,6 @@ int main(int argc, char *argv[]) {
     // immediately
     SDL_Delay(16.67f > time_elasped ? 16.67f - time_elasped : 0);
 
-    if (chip8.draw_flag) {
-      draw_display(chip8);
-    }
     update_timers(&chip8);
   }
 
