@@ -145,6 +145,8 @@ void emulate_instructions(chip8_t *chip8) {
   case 0x08:
     switch (N) {
 
+      bool carry;
+
     case 0:
       // 8XY0: Sets VX to the value of VY.
       chip8->V[X] = chip8->V[Y];
@@ -152,42 +154,46 @@ void emulate_instructions(chip8_t *chip8) {
     case 1:
       // 8XY1: Sets VX to VX or VY. (bitwise OR operation).
       chip8->V[X] |= chip8->V[Y];
+      chip8->V[0xF] = 0;
       break;
     case 2:
       // 8XY2: Sets VX to VX and VY. (bitwise AND operation).
       chip8->V[X] &= chip8->V[Y];
+      chip8->V[0xF] = 0;
       break;
     case 3:
       // 8XY3: Sets VX to VX xor VY.
       chip8->V[X] ^= chip8->V[Y];
+      chip8->V[0xF] = 0;
       break;
     case 4: {
       // // 8XY4: Sets VX to VX += VY set VF to 1 if there is overflow.
       // // Note: C will handle the implicit wrap around from overflow
-      uint16_t sum = chip8->V[X] + chip8->V[Y];
-      if (sum > 255)
-        chip8->V[0x0F] = 1;
-      chip8->V[X] += sum;
+      carry = ((uint16_t)(chip8->V[X] + chip8->V[Y]) > 255);
+      chip8->V[X] += chip8->V[Y];
+      chip8->V[0xF] = carry;
       break;
     }
     case 5:
       // 8XY5: VY is subtracted from VX. VF is set to 0 when there's an
       // underflow, and 1 when there is not. (i.e. VF set to 1 if VX >= VY and 0
       // if not).
-      chip8->V[0x0F] = chip8->V[X] >= chip8->V[Y] ? 1 : 0;
+      carry = ((chip8->V[X]) >= (chip8->V[Y]));
       chip8->V[X] -= chip8->V[Y];
+      chip8->V[0xF] = carry;
       break;
     case 6:
       // 	8XY6: Stores the least significant bit of VX in VF and then
       // shifts VX to the right by 1.
-      chip8->V[0x0F] = chip8->V[X] & 1;
-      chip8->V[X] >>= 1;
+      carry = chip8->V[Y] & 1;
+      chip8->V[X] = (chip8->V[Y] >> 1);
+      chip8->V[0xF] = carry;
       break;
     case 7:
       // 8XY7:Sets VX to VY minus VX. VF is set to 0 when there's an underflow,
       // and 1 when there is not. (i.e. VF set to 1 if VY >= VX).
       chip8->V[0x0F] = chip8->V[Y] >= chip8->V[X] ? 1 : 0;
-      chip8->V[X] = chip8->V[Y] - chip8->V[Y];
+      chip8->V[X] = chip8->V[Y] - chip8->V[X];
       break;
     case 0xE:
       // 8XYE: 	Stores the most significant bit of VX in VF and then shifts VX
